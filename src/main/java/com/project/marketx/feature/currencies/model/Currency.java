@@ -1,7 +1,5 @@
 package com.project.marketx.feature.currencies.model;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
-
 public class Currency {
 
     private String code;
@@ -15,7 +13,6 @@ public class Currency {
         this.currency = currency;
     }
 
-    @JsonGetter("code")
     public String getCode() {
         return code;
     }
@@ -24,7 +21,6 @@ public class Currency {
         this.code = code;
     }
 
-    @JsonGetter("currency")
     public String getCurrency() {
         return currency;
     }

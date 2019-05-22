@@ -1,8 +1,9 @@
 package com.project.marketx.feature.currencies.service;
 
 import com.project.marketx.feature.currencies.model.Currency;
+import com.project.marketx.jsonconverter.Converter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -11,8 +12,8 @@ public class CurrencyService {
 
     public List<Currency> getListOfCurrencies() {
 
+
         return null;
     }
-
 
 }
