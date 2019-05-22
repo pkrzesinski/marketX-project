@@ -17,7 +17,5 @@ public class MarketXApplication {
         CurrencyService currencyService = new CurrencyService(new Converter());
 
         List<Currency> currencyList = currencyService.getListOfCurrencies();
-        System.out.println(currencyList);
-
     }
 }

@@ -23,6 +23,6 @@ public class CurrencyController {
     @GetMapping("/main")
     public String freeMarker(Model model) {
         model.addAttribute("message", "Spring Boot" + "FreeMarker");
-        return "test";
+        return "mainView";
     }
 }
