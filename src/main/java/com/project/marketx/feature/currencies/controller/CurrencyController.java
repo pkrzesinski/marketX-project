@@ -38,11 +38,12 @@ public class CurrencyController {
         return "mainView";
     }
 
-    @RequestMapping(value = "/main", method = RequestMethod.POST)//, produces = "application/json")
+    @RequestMapping(value = "/main", method = RequestMethod.POST, produces = "application/json")
     public Response getCurrencyJson(@RequestParam("fromCurrent") String fromCurrency
             , @RequestParam("toCurrent") String toCurrency) {
         System.out.println(fromCurrency);
         System.out.println(toCurrency);
+        alphavantageAPI.findExchangeRate(fromCurrency, toCurrency);
         return Response.ok().build();
     }
 
