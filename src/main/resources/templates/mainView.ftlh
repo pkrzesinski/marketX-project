@@ -6,14 +6,19 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-<#--    <script type="text/javascript" src="/resources/static/jquery/jquery-3.3.1.js"></script>-->
-<#--    <script type="text/javascript" src="../static/bootstrap/js/bootstrap.min.js"></script>-->
-<#--    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">-->
+    <#--    <script type="text/javascript" src="/resources/static/jquery/jquery-3.3.1.js"></script>-->
+    <#--    <script type="text/javascript" src="../static/bootstrap/js/bootstrap.min.js"></script>-->
+    <#--    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">-->
 
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
     <#--    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>-->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
     <title>MarketX</title>
 </head>
 <body>
@@ -21,7 +26,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
     <div class="container">
-        <a class="navbar-brand" href="#">Start Bootstrap</a>
+        <a class="navbar-brand" href="/api/v1/currencies/main">MarketX</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -50,13 +55,50 @@
 <!-- Page Content -->
 <div class="container">
     <div class="row">
-        <div class="col-lg-12 text-center">
-            <h1 class="mt-5">A Bootstrap 4 Starter Template</h1>
-            <p class="lead">Complete with pre-defined file paths and responsive navigation!</p>
-            <ul class="list-unstyled">
-                <li>Bootstrap 4.3.1</li>
-                <li>jQuery 3.4.1</li>
-            </ul>
+        <div class="col-lg-12">
+
+            <form class="form-horizontal" action="/api/v1/currencies/main" method="post">
+                <fieldset>
+
+                    <!-- Form Name -->
+                    <legend>Available currencies</legend>
+
+                    <!-- Select Basic -->
+
+                    <div class="form-inline form-group col-md-6">
+                        <label class="control-label" for="selectbasic">From</label>
+                        <div class="col-md-4">
+                            <select id="selectbasic" name="fromCurrent" class="form-control">
+                                <#list currencyModel as value>
+                                    <option value="${value.code}">${value.code}</option>
+                                </#list>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Select Basic -->
+                    <div class="form-inline form-group col-md-6">
+                        <label class="control-label" for="toCurrent">To</label>
+                        <div class="col-md-4">
+                            <select id="toCurrent" name="toCurrent" class="form-control">
+                                <#list currencyModel as value>
+                                    <option value="${value.code}">${value.code}</option>
+                                </#list>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Button -->
+                    <div class="form-inline form-group col-md-6">
+                        <label class="control-label" for="searchButton"></label>
+                        <div class="col-md-4">
+                            <button id="searchButton" name="searchButton" class="btn btn-success">Submit</button>
+                        </div>
+                    </div>
+
+                </fieldset>
+            </form>
+
         </div>
     </div>
 </div>
