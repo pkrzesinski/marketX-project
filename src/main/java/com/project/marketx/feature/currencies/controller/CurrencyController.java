@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import javax.servlet.ServletRequest;
 import java.time.LocalDate;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 public class CurrencyController {
@@ -41,7 +43,7 @@ public class CurrencyController {
             Map<LocalDate, DailyRate> historicalMap = currencyService.getHistoricalData(fromCurrency, toCurrency)
                     .getTimeSeriesFX();
 
-            model.addAttribute("historicalModel", historicalMap);
+            model.addAttribute("historicalModel", changeKeyOrder(historicalMap));
 
             currencyExchange.ifPresent(exchange -> model.addAttribute("rateModel"
                     , exchange.getRealtimeCurrencyExchangeRate().getExchangeRate()));
@@ -49,5 +51,13 @@ public class CurrencyController {
 
         model.addAttribute("currencyModel", currencyList);
         return "mainView";
+    }
+
+    private Map<LocalDate, DailyRate> changeKeyOrder(Map<LocalDate, DailyRate> map) {
+
+        return map.entrySet().stream()
+                .sorted(Map.Entry.comparingByKey())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                        (oldValue, newValue) -> oldValue, LinkedHashMap::new));
     }
 }
