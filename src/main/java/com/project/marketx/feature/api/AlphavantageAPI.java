@@ -1,10 +1,8 @@
 package com.project.marketx.feature.api;
 
+import com.project.marketx.feature.api.model.CurrencyExchange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
@@ -16,7 +14,7 @@ public class AlphavantageAPI {
     private final String API_KEY = "QKNXBJPRKN1DO9GN";
     private final String FUNCTION = "CURRENCY_EXCHANGE_RATE";
 
-    public String findExchangeRate(String fromCurrency, String toCurrency) {
+    public CurrencyExchange findExchangeRate(String fromCurrency, String toCurrency) {
 
         String url = "https://www.alphavantage.co/query";
 
@@ -29,9 +27,7 @@ public class AlphavantageAPI {
                 .build();
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate.exchange(uriComponents.toUri(), HttpMethod.GET
-                , HttpEntity.EMPTY, String.class);
 
-        return response.getBody();
+        return restTemplate.getForObject(uriComponents.toUri(), CurrencyExchange.class);
     }
 }

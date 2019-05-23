@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RealTimeCurrencyExchange {
@@ -16,7 +15,7 @@ public class RealTimeCurrencyExchange {
     @JsonProperty("5. Exchange Rate")
     private BigDecimal exchangeRate;
     @JsonProperty("6. Last Refreshed")
-    private LocalDateTime lastRefreshed;
+    private String lastRefreshed;
     @JsonProperty("7. Time Zone")
     private String timeZone;
 
@@ -47,11 +46,11 @@ public class RealTimeCurrencyExchange {
         this.exchangeRate = exchangeRate;
     }
 
-    public LocalDateTime getLastRefreshed() {
+    public String getLastRefreshed() {
         return lastRefreshed;
     }
 
-    public void setLastRefreshed(LocalDateTime lastRefreshed) {
+    public void setLastRefreshed(String lastRefreshed) {
         this.lastRefreshed = lastRefreshed;
     }
 

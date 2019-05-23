@@ -1,6 +1,7 @@
 package com.project.marketx.feature.currencies.controller;
 
 import com.project.marketx.feature.api.AlphavantageAPI;
+import com.project.marketx.feature.api.model.CurrencyExchange;
 import com.project.marketx.feature.currencies.model.Currency;
 import com.project.marketx.feature.currencies.service.CurrencyService;
 import org.slf4j.Logger;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.ws.rs.core.Response;
 import java.util.List;
 
 @Controller
@@ -31,20 +31,16 @@ public class CurrencyController {
 
     @GetMapping("/main")
     public String displayMainPage(Model model) {
-
         List<Currency> currencyList = currencyService.getListOfCurrencies();
 
         model.addAttribute("currencyModel", currencyList);
         return "mainView";
     }
 
-    @RequestMapping(value = "/main", method = RequestMethod.POST, produces = "application/json")
-    public Response getCurrencyJson(@RequestParam("fromCurrent") String fromCurrency
+    @RequestMapping(value = "/main", method = RequestMethod.POST)
+    public void getCurrencyJson(Model model, @RequestParam("fromCurrent") String fromCurrency
             , @RequestParam("toCurrent") String toCurrency) {
-        System.out.println(fromCurrency);
-        System.out.println(toCurrency);
-        alphavantageAPI.findExchangeRate(fromCurrency, toCurrency);
-        return Response.ok().build();
-    }
+        CurrencyExchange currencyExchange = alphavantageAPI.findExchangeRate(fromCurrency, toCurrency);
 
+    }
 }

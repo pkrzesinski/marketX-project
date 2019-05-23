@@ -65,28 +65,41 @@
 
                     <!-- Select Basic -->
 
-                    <div class="form-inline form-group col-md-6">
-                        <label class="control-label" for="selectbasic">From</label>
-                        <div class="col-md-4">
-                            <select id="selectbasic" name="fromCurrent" class="form-control">
-                                <#list currencyModel as value>
-                                    <option value="${value.code}">${value.code}</option>
-                                </#list>
-                            </select>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <h3>From</h3>
+                                <div class="form-inline form-group">
+                                    <label class="control-label" for="selectbasic">From</label>
+                                    <select id="selectbasic" name="fromCurrent" class="form-control">
+                                        <option value="" selected disabled hidden>Choose here</option>
+                                        <#list currencyModel as value>
+                                            <option value="${value.code}">${value.code}</option>
+                                        </#list>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-4">
+                                <h3>To</h3>
+                                <!-- Select Basic -->
+                                <div class="form-inline form-group">
+                                    <label class="control-label" for="toCurrent">To</label>
+                                    <select id="toCurrent" name="toCurrent" class="form-control">
+                                        <option value="" selected disabled hidden>Choose here</option>
+                                        <#list currencyModel as value>
+                                            <option value="${value.code}">${value.code}</option>
+                                        </#list>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <h3>Exchange rate</h3>
+                                <input type="number" step="any" id="rate" name="rate" value="123" disabled>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Select Basic -->
-                    <div class="form-inline form-group col-md-6">
-                        <label class="control-label" for="toCurrent">To</label>
-                        <div class="col-md-4">
-                            <select id="toCurrent" name="toCurrent" class="form-control">
-                                <#list currencyModel as value>
-                                    <option value="${value.code}">${value.code}</option>
-                                </#list>
-                            </select>
-                        </div>
-                    </div>
 
                     <!-- Button -->
                     <div class="form-inline form-group col-md-6">
