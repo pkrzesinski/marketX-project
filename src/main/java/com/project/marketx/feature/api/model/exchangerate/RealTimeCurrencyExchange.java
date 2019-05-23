@@ -1,4 +1,4 @@
-package com.project.marketx.feature.api.model;
+package com.project.marketx.feature.api.model.exchangerate;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

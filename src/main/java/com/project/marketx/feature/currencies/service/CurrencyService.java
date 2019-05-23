@@ -1,7 +1,8 @@
 package com.project.marketx.feature.currencies.service;
 
 import com.project.marketx.feature.api.AlphavantageAPI;
-import com.project.marketx.feature.api.model.CurrencyExchange;
+import com.project.marketx.feature.api.model.exchangerate.CurrencyExchange;
+import com.project.marketx.feature.api.model.forexdailyprices.FXDaily;
 import com.project.marketx.feature.currencies.model.Currency;
 import com.project.marketx.jsonconverter.Converter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,11 @@ public class CurrencyService {
     public Optional<CurrencyExchange> getCurrencyRate(String fromCurrency, String toCurrency) {
         CurrencyExchange currencyExchange = alphavantageAPI.findExchangeRate(fromCurrency, toCurrency);
         return Optional.ofNullable(currencyExchange);
+    }
+
+    public FXDaily getHistoricalData(String fromCurrency, String toCurrency) {
+        FXDaily fxDaily = alphavantageAPI.getHistoricalData(fromCurrency, toCurrency);
+        return fxDaily;
     }
 
     private Map<String, String> getMapOfCurrencies() {
