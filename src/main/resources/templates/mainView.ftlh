@@ -57,7 +57,7 @@
     <div class="row">
         <div class="col-lg-12">
 
-            <form class="form-horizontal" action="/api/v1/currencies/main" method="post">
+            <form class="form-horizontal" action="/api/v1/currencies/main" method="GET">
                 <fieldset>
 
                     <!-- Form Name -->
@@ -70,9 +70,8 @@
                             <div class="col-sm-4">
                                 <h3>From</h3>
                                 <div class="form-inline form-group">
-                                    <label class="control-label" for="selectbasic">From</label>
-                                    <select id="selectbasic" name="fromCurrent" class="form-control">
-                                        <option value="" selected disabled hidden>Choose here</option>
+                                    <label class="control-label" for="fromCurrency">From</label>
+                                    <select id="fromCurrency" name="fromCurrency" class="form-control">
                                         <#list currencyModel as value>
                                             <option value="${value.code}">${value.code}</option>
                                         </#list>
@@ -84,9 +83,8 @@
                                 <h3>To</h3>
                                 <!-- Select Basic -->
                                 <div class="form-inline form-group">
-                                    <label class="control-label" for="toCurrent">To</label>
-                                    <select id="toCurrent" name="toCurrent" class="form-control">
-                                        <option value="" selected disabled hidden>Choose here</option>
+                                    <label class="control-label" for="toCurrency">To</label>
+                                    <select id="toCurrency" name="toCurrency" class="form-control">
                                         <#list currencyModel as value>
                                             <option value="${value.code}">${value.code}</option>
                                         </#list>
@@ -95,7 +93,8 @@
                             </div>
                             <div class="col-sm-4">
                                 <h3>Exchange rate</h3>
-                                <input type="number" step="any" id="rate" name="rate" value="123" disabled>
+                                <input type="text" id="rate" name="rate"
+                                       value="<#if rateModel??>${rateModel}</#if>" disabled>
                             </div>
                         </div>
                     </div>
@@ -105,7 +104,7 @@
                     <div class="form-inline form-group col-md-6">
                         <label class="control-label" for="searchButton"></label>
                         <div class="col-md-4">
-                            <button id="searchButton" name="searchButton" class="btn btn-success">Submit</button>
+                            <button id="searchButton" class="btn btn-success">Submit</button>
                         </div>
                     </div>
 
