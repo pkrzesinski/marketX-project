@@ -15,7 +15,6 @@ public class MarketXApplication {
         SpringApplication.run(MarketXApplication.class, args);
 
         CurrencyService currencyService = new CurrencyService(new Converter());
-
         List<Currency> currencyList = currencyService.getListOfCurrencies();
     }
 }
