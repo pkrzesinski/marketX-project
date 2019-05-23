@@ -31,14 +31,17 @@ public class CurrencyController {
     @GetMapping
     public String displayMainPage(ServletRequest request, Model model) {
         List<Currency> currencyList = currencyService.getListOfCurrencies();
-
         String fromCurrency = request.getParameter("fromCurrency");
         String toCurrency = request.getParameter("toCurrency");
-        if (fromCurrency != null && toCurrency != null) {
-            Optional<CurrencyExchange> currencyExchange = currencyService.getCurrencyRate(fromCurrency, toCurrency);
-            Map<LocalDate, DailyRate> map = currencyService.getHistoricalData(fromCurrency, toCurrency).getTimeSeriesFX();
 
-            model.addAttribute("historicalModel", map);
+        if (fromCurrency != null && toCurrency != null) {
+
+            Optional<CurrencyExchange> currencyExchange = currencyService.getCurrencyRate(fromCurrency, toCurrency);
+
+            Map<LocalDate, DailyRate> historicalMap = currencyService.getHistoricalData(fromCurrency, toCurrency)
+                    .getTimeSeriesFX();
+
+            model.addAttribute("historicalModel", historicalMap);
 
             currencyExchange.ifPresent(exchange -> model.addAttribute("rateModel"
                     , exchange.getRealtimeCurrencyExchangeRate().getExchangeRate()));
