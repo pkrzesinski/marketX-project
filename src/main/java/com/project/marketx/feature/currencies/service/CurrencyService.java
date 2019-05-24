@@ -31,7 +31,6 @@ public class CurrencyService {
     }
 
     public List<Currency> getListOfCurrencies() {
-
         return getMapOfCurrencies().entrySet()
                 .stream()
                 .map(entry -> new Currency(entry.getKey(), entry.getValue()))

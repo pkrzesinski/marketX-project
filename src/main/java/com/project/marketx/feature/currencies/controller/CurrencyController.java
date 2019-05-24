@@ -44,7 +44,8 @@ public class CurrencyController {
                     .getTimeSeriesFX();
 
             model.addAttribute("historicalModel", changeKeyOrder(historicalMap));
-
+            model.addAttribute("fromCurrencyModel", fromCurrency);
+            model.addAttribute("toCurrencyModel", toCurrency);
             currencyExchange.ifPresent(exchange -> model.addAttribute("rateModel"
                     , exchange.getRealtimeCurrencyExchangeRate().getExchangeRate()));
         }

@@ -6,9 +6,9 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <#--    <script type="text/javascript" src="/resources/static/jquery/jquery-3.3.1.js"></script>-->
-    <#--    <script type="text/javascript" src="../static/bootstrap/js/bootstrap.min.js"></script>-->
-    <#--    <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css">-->
+<#--        <script type="text/javascript" src="/jquery/jquery-3.3.1.js"></script>-->
+<#--        <script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>-->
+<#--        <link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css">-->
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -26,7 +26,7 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
     <div class="container">
-        <a class="navbar-brand" href="/api/v1/currencies/main">MarketX</a>
+        <a class="navbar-brand" href="/main">MarketX</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
                 aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -41,12 +41,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#">About</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Services</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li>
             </ul>
         </div>
     </div>
@@ -57,7 +51,7 @@
     <div class="row">
         <div class="col-lg-12">
 
-            <form class="form-horizontal" action="/api/v1/currencies/main" method="GET">
+            <form class="form-horizontal" action="/main" method="GET">
                 <fieldset>
 
                     <!-- Form Name -->
@@ -111,6 +105,7 @@
         </div>
     </div>
 </div>
+
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
@@ -155,7 +150,7 @@
                 var option = {
                     backgroundColor: '#21202D',
                     legend: {
-                        data: ['Test1', 'MA1'],
+                        data: ['Candle stick', 'Average'],
                         inactiveColor: '#777',
                         textStyle: {
                             color: '#fff'
@@ -216,7 +211,7 @@
                     series: [
                         {
                             type: 'candlestick',
-                            name: 'Test1',
+                            name: 'Candle stick',
                             data: data,
                             itemStyle: {
                                 normal: {
@@ -228,7 +223,7 @@
                             }
                         },
                         {
-                            name: 'MA1',
+                            name: 'Average',
                             type: 'line',
                             data: calculateMA(1, data),
                             smooth: true,
