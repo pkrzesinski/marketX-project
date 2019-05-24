@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -33,6 +34,7 @@ public class CurrencyService {
     public List<Currency> getListOfCurrencies() {
         return getMapOfCurrencies().entrySet()
                 .stream()
+                .filter(Objects::nonNull)
                 .map(entry -> new Currency(entry.getKey(), entry.getValue()))
                 .collect(Collectors.toList());
     }

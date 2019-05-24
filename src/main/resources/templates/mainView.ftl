@@ -6,9 +6,9 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-<#--        <script type="text/javascript" src="/jquery/jquery-3.3.1.js"></script>-->
-<#--        <script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>-->
-<#--        <link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css">-->
+    <#--        <script type="text/javascript" src="/jquery/jquery-3.3.1.js"></script>-->
+    <#--        <script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>-->
+    <#--        <link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css">-->
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -47,7 +47,7 @@
 </nav>
 
 <!-- Page Content -->
-<div class="container">
+<div class="container my-md-4">
     <div class="row">
         <div class="col-md-12">
 
@@ -65,6 +65,7 @@
                                 <h3>From</h3>
                                 <div class="form-inline form-group">
                                     <select id="fromCurrency" name="fromCurrency" class="form-control">
+                                        <option value="" selected disabled hidden>Select</option>
                                         <#list currencyModel as value>
                                             <option value="${value.code}">${value.code}</option>
                                         </#list>
@@ -77,6 +78,7 @@
                                 <!-- Select Basic -->
                                 <div class="form-inline form-group">
                                     <select id="toCurrency" name="toCurrency" class="form-control">
+                                        <option value="" selected disabled hidden>Select</option>
                                         <#list currencyModel as value>
                                             <option value="${value.code}">${value.code}</option>
                                         </#list>
@@ -104,6 +106,11 @@
 
         </div>
     </div>
+</div>
+
+<div class="container text-center">
+    <h2><#if fromCurrencyModel??> </#if></h2>
+    <h1> <#if fromCurrencyModel??> ${fromCurrencyModel} - ${toCurrencyModel} </#if></h1>
 </div>
 
 <div class="container">
@@ -241,6 +248,7 @@
                     myChart.setOption(option, true);
                 }
             </script>
+
         </div>
     </div>
 </div>
