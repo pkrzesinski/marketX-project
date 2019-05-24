@@ -111,9 +111,8 @@
         <div class="col-lg-12">
             <div id="container" style="height: 500px; width: 100%"></div>
 
-<#--            <script type="text/javascript"-->
-<#--                    src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>-->
-            <script type="text/javascript" src="/echarts.min.js"></script>
+            <script type="text/javascript"
+                    src="//echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
 
             <script type="text/javascript">
                 var dom = document.getElementById("container");
