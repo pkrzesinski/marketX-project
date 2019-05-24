@@ -47,9 +47,9 @@
 </nav>
 
 <!-- Page Content -->
-<div class="container margin-top">
+<div class="container">
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-md-12">
 
             <form class="form-horizontal" action="/main" method="GET">
                 <fieldset>
@@ -61,7 +61,7 @@
 
                     <div class="container">
                         <div class="row">
-                            <div class="col-sm-4">
+                            <div class="col-md-2">
                                 <h3>From</h3>
                                 <div class="form-inline form-group">
                                     <select id="fromCurrency" name="fromCurrency" class="form-control">
@@ -72,7 +72,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-4">
+                            <div class="col-md-2">
                                 <h3>To</h3>
                                 <!-- Select Basic -->
                                 <div class="form-inline form-group">
@@ -83,7 +83,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-md-4">
                                 <h3>Exchange rate</h3>
                                 <input type="text" id="rate" name="rate"
                                        value="<#if rateModel??>${rateModel}</#if>" disabled>
@@ -92,7 +92,7 @@
                     </div>
 
                     <!-- Button -->
-                    <div class="form-inline form-group col-md-6">
+                    <div class="form-inline form-group">
                         <label class="control-label" for="searchButton"></label>
                         <div class="col-md-4">
                             <button id="searchButton" class="btn btn-success">Submit</button>
