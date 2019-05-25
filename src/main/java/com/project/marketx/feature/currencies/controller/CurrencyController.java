@@ -23,12 +23,13 @@ import java.util.stream.Collectors;
 public class CurrencyController {
     private static final Logger LOG = LoggerFactory.getLogger(CurrencyController.class);
 
-    private CurrencyService currencyService;
-
     @Autowired
-    public CurrencyController(CurrencyService currencyService) {
-        this.currencyService = currencyService;
-    }
+    private CurrencyService currencyService;
+//
+//    @Autowired
+//    public CurrencyController(CurrencyService currencyService) {
+//        this.currencyService = currencyService;
+//    }
 
     @GetMapping
     public String displayMainPage(ServletRequest request, Model model) {
@@ -55,7 +56,6 @@ public class CurrencyController {
     }
 
     private Map<LocalDate, DailyRate> changeKeyOrder(Map<LocalDate, DailyRate> map) {
-
         return map.entrySet().stream()
                 .sorted(Map.Entry.comparingByKey())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,

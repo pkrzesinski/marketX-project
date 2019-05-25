@@ -8,6 +8,8 @@ import com.project.marketx.jsonconverter.Converter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import javax.ejb.Startup;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -15,22 +17,15 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Startup
 public class CurrencyService {
 
+    @Autowired
     private Converter converter;
     @Autowired
     private AlphavantageAPI alphavantageAPI;
 
-    @Autowired
-    public CurrencyService(Converter converter) {
-        this.converter = converter;
-    }
-
-    public CurrencyService(Converter converter, AlphavantageAPI alphavantageAPI) {
-        this.converter = converter;
-        this.alphavantageAPI = alphavantageAPI;
-    }
-
+    @PostConstruct
     public List<Currency> getListOfCurrencies() {
         return getMapOfCurrencies().entrySet()
                 .stream()
@@ -48,6 +43,7 @@ public class CurrencyService {
         FXDaily fxDaily = alphavantageAPI.getHistoricalData(fromCurrency, toCurrency);
         return fxDaily;
     }
+
 
     private Map<String, String> getMapOfCurrencies() {
         return converter.getCurrenciesMap();

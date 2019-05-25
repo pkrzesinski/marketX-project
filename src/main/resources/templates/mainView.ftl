@@ -109,8 +109,8 @@
 </div>
 
 <div class="container text-center">
-    <h2><#if fromCurrencyModel??> </#if></h2>
     <h1> <#if fromCurrencyModel??> ${fromCurrencyModel} - ${toCurrencyModel} </#if></h1>
+    <h2 style="color:red;"><#if historicalModel??><#if historicalModel?size==0>No data for selected currencies.</#if></#if></h2>
 </div>
 
 <div class="container">
@@ -147,6 +147,15 @@
                     return result;
                 }
 
+                function closingPrice(data) {
+                    var result = [];
+
+                    for (var i = 0; i < data.length; i++) {
+                        result.push(data[i][1]);
+                    }
+                    return result;
+                }
+
                 var dates = rawData.map(function (item) {
                     return item[0];
                 });
@@ -154,10 +163,11 @@
                 var data = rawData.map(function (item) {
                     return [+item[1], +item[2], +item[5], +item[6]];
                 });
+
                 var option = {
                     backgroundColor: '#21202D',
                     legend: {
-                        data: ['Candle stick', 'Average'],
+                        data: ['Candle stick', 'Close price'],
                         inactiveColor: '#777',
                         textStyle: {
                             color: '#fff'
@@ -217,8 +227,8 @@
 
                     series: [
                         {
-                            type: 'candlestick',
                             name: 'Candle stick',
+                            type: 'candlestick',
                             data: data,
                             itemStyle: {
                                 normal: {
@@ -230,14 +240,14 @@
                             }
                         },
                         {
-                            name: 'Average',
+                            name: 'Close price',
                             type: 'line',
-                            data: calculateMA(1, data),
-                            smooth: true,
+                            data: closingPrice(data),
+                            smooth: false,
                             showSymbol: false,
                             lineStyle: {
                                 normal: {
-                                    width: 1.3
+                                    width: 1.5
                                 }
                             }
                         }

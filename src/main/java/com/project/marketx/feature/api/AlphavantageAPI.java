@@ -41,6 +41,7 @@ public class AlphavantageAPI {
                 .queryParam("from_symbol", fromCurrency)
                 .queryParam("to_symbol", toCurrency)
                 .queryParam("apikey", API_KEY)
+                .queryParam("outputsize", "full")
                 .build();
 
         RestTemplate restTemplate = new RestTemplate();
