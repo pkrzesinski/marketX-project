@@ -88,7 +88,7 @@
                             <div class="col-md-4">
                                 <h3>Exchange rate</h3>
                                 <input type="text" id="rate" name="rate"
-                                       value="<#if rateModel??>${rateModel}</#if>" disabled>
+                                       value="<#if rateModel??>${rateModel?string["0.#######"]}</#if>" disabled>
                             </div>
                         </div>
                     </div>
@@ -167,7 +167,7 @@
                 var option = {
                     backgroundColor: '#21202D',
                     legend: {
-                        data: ['Candle stick', 'Close price'],
+                        data: ['Candle stick', 'Close price', 'test'],
                         inactiveColor: '#777',
                         textStyle: {
                             color: '#fff'
@@ -247,6 +247,20 @@
                             showSymbol: false,
                             lineStyle: {
                                 normal: {
+                                    color: '#FFFFFF',
+                                    width: 1.5
+                                }
+                            }
+                        },
+                        {
+                            name: 'test',
+                            type: 'line',
+                            data: [<#if trendModel??><#list trendModel as values>${values}<#sep>,</#list></#if>],
+                            smooth: false,
+                            showSymbol: false,
+                            lineStyle: {
+                                normal: {
+                                    color: '#feff00',
                                     width: 1.5
                                 }
                             }
