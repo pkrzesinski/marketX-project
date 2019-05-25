@@ -4,14 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDate;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class FXDaily {
 
     @JsonProperty("Time Series FX (Daily)")
-    private Map<LocalDate, DailyRate> timeSeriesFX = new HashMap<>();
+    private Map<LocalDate, DailyRate> timeSeriesFX = new LinkedHashMap<>();
 
     public FXDaily() {
     }

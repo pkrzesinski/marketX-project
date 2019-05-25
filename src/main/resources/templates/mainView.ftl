@@ -6,9 +6,9 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-<#--        <script type="text/javascript" src="/jquery/jquery-3.3.1.js"></script>-->
-<#--        <script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>-->
-<#--        <link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css">-->
+    <#--        <script type="text/javascript" src="/jquery/jquery-3.3.1.js"></script>-->
+    <#--        <script type="text/javascript" src="../bootstrap/js/bootstrap.min.js"></script>-->
+    <#--        <link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css">-->
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -47,9 +47,9 @@
 </nav>
 
 <!-- Page Content -->
-<div class="container margin-top">
+<div class="container my-md-4">
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-md-12">
 
             <form class="form-horizontal" action="/main" method="GET">
                 <fieldset>
@@ -61,10 +61,11 @@
 
                     <div class="container">
                         <div class="row">
-                            <div class="col-sm-4">
+                            <div class="col-md-2">
                                 <h3>From</h3>
                                 <div class="form-inline form-group">
                                     <select id="fromCurrency" name="fromCurrency" class="form-control">
+                                        <option value="" selected disabled hidden>Select</option>
                                         <#list currencyModel as value>
                                             <option value="${value.code}">${value.code}</option>
                                         </#list>
@@ -72,27 +73,28 @@
                                 </div>
                             </div>
 
-                            <div class="col-sm-4">
+                            <div class="col-md-2">
                                 <h3>To</h3>
                                 <!-- Select Basic -->
                                 <div class="form-inline form-group">
                                     <select id="toCurrency" name="toCurrency" class="form-control">
+                                        <option value="" selected disabled hidden>Select</option>
                                         <#list currencyModel as value>
                                             <option value="${value.code}">${value.code}</option>
                                         </#list>
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-md-4">
                                 <h3>Exchange rate</h3>
                                 <input type="text" id="rate" name="rate"
-                                       value="<#if rateModel??>${rateModel}</#if>" disabled>
+                                       value="<#if rateModel??>${rateModel?string["0.#######"]}</#if>" disabled>
                             </div>
                         </div>
                     </div>
 
                     <!-- Button -->
-                    <div class="form-inline form-group col-md-6">
+                    <div class="form-inline form-group">
                         <label class="control-label" for="searchButton"></label>
                         <div class="col-md-4">
                             <button id="searchButton" class="btn btn-success">Submit</button>
@@ -104,6 +106,11 @@
 
         </div>
     </div>
+</div>
+
+<div class="container text-center">
+    <h1> <#if fromCurrencyModel??> ${fromCurrencyModel} - ${toCurrencyModel} </#if></h1>
+    <h2 style="color:red;"><#if historicalModel??><#if historicalModel?size==0>No data for selected currencies.</#if></#if></h2>
 </div>
 
 <div class="container">
@@ -140,6 +147,15 @@
                     return result;
                 }
 
+                function closingPrice(data) {
+                    var result = [];
+
+                    for (var i = 0; i < data.length; i++) {
+                        result.push(data[i][1]);
+                    }
+                    return result;
+                }
+
                 var dates = rawData.map(function (item) {
                     return item[0];
                 });
@@ -147,10 +163,11 @@
                 var data = rawData.map(function (item) {
                     return [+item[1], +item[2], +item[5], +item[6]];
                 });
+
                 var option = {
                     backgroundColor: '#21202D',
                     legend: {
-                        data: ['Candle stick', 'Average'],
+                        data: ['Candle stick', 'Close price', 'test'],
                         inactiveColor: '#777',
                         textStyle: {
                             color: '#fff'
@@ -210,8 +227,8 @@
 
                     series: [
                         {
-                            type: 'candlestick',
                             name: 'Candle stick',
+                            type: 'candlestick',
                             data: data,
                             itemStyle: {
                                 normal: {
@@ -223,14 +240,28 @@
                             }
                         },
                         {
-                            name: 'Average',
+                            name: 'Close price',
                             type: 'line',
-                            data: calculateMA(1, data),
-                            smooth: true,
+                            data: closingPrice(data),
+                            smooth: false,
                             showSymbol: false,
                             lineStyle: {
                                 normal: {
-                                    width: 1.3
+                                    color: '#FFFFFF',
+                                    width: 1.5
+                                }
+                            }
+                        },
+                        {
+                            name: 'test',
+                            type: 'line',
+                            data: [<#if trendModel??><#list trendModel as values>${values}<#sep>,</#list></#if>],
+                            smooth: false,
+                            showSymbol: false,
+                            lineStyle: {
+                                normal: {
+                                    color: '#feff00',
+                                    width: 1.5
                                 }
                             }
                         }
@@ -241,6 +272,7 @@
                     myChart.setOption(option, true);
                 }
             </script>
+
         </div>
     </div>
 </div>
