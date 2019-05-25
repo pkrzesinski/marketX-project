@@ -15,8 +15,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 
 @Component
 public class TrendLine {
-    private static final BigDecimal TREND_LINE_PEAK = new BigDecimal(0.4);
-    private static final int TIME_PERIOD_STEP_IN_DAYS = 30;
+    private static final int TIME_PERIOD_STEP_IN_DAYS = 45;
 
     private Map<LocalDate, BigDecimal> maxMap = new LinkedHashMap<>();
     private Map<LocalDate, BigDecimal> minMap = new LinkedHashMap<>();
@@ -77,8 +76,8 @@ public class TrendLine {
                 int timePeriod = 0;
                 simpleRegression.clear();
 
-                BigDecimal max = BigDecimal.valueOf(Integer.MIN_VALUE);//closePriceList.get(TIME_PERIOD_STEP_IN_DAYS * i);
-                BigDecimal min = BigDecimal.valueOf(Integer.MAX_VALUE);//closePriceList.get(TIME_PERIOD_STEP_IN_DAYS * i);
+                BigDecimal max = BigDecimal.valueOf(Integer.MIN_VALUE);
+                BigDecimal min = BigDecimal.valueOf(Integer.MAX_VALUE);
 
                 for (int j = timePeriod; j < TIME_PERIOD_STEP_IN_DAYS; j++) {
 
@@ -127,47 +126,77 @@ public class TrendLine {
 
         Set<LocalDate> setDates = map.keySet();
 
-        for (int i = 0; i < trendLine.regressionList.size(); i++) {
+        if (map.size() > 0) {
+            for (int i = 0; i < trendLine.regressionList.size(); i++) {
 
-            int dateIndex = 0;
-            int daysInBetween = (int) Math.abs(DAYS.between(maxDateList.get(i), minDateList.get(i)));
-            BigDecimal step = (maxValueList.get(i).subtract(minValueList.get(i))
-                    .divide(BigDecimal.valueOf(daysInBetween), 6));
+                int dateIndex = 0;
 
-            if (trendLine.regressionList.get(i) == -1) {
-                step = step.multiply(BigDecimal.valueOf(regressionList.get(i)));
+                if (trendLine.regressionList.get(i) == -1) {
 
-                LocalDate myDate = maxDateList.get(i);
+                    LocalDate firstDate = minDateList.get(i);
+                    int daysInBetween = 0;
+                    BigDecimal step = new BigDecimal(0);
+                    BigDecimal initialMinValue = minValueList.get(i);
 
-                for (LocalDate localDate : map.keySet()) {
-                    if (localDate.equals(myDate)) {
-                        break;
+                    for (int j = i + 1; j < regressionList.size() - 1; j++) {
+
+                        if (regressionList.get(j) == -1 || regressionList.get(j + 1) == -1) {
+                            daysInBetween = (int) Math.abs(DAYS.between(minDateList.get(j), firstDate));
+                            step = (minValueList.get(j).subtract(initialMinValue)
+                                    .divide(BigDecimal.valueOf(daysInBetween), 6));
+                            i++;
+                        } else {
+                            break;
+                        }
                     }
-                    dateIndex++;
-                }
 
-                for (int j = 0; j < daysInBetween; j++) {
-                    trendList.set(dateIndex + j, maxValueList.get(i).add(BigDecimal.valueOf(j).multiply(step)));
-                }
-
-            } else if (trendLine.regressionList.get(i) == 1) {
-
-                step = step.multiply(BigDecimal.valueOf(regressionList.get(i)));
-
-                LocalDate myDate = minDateList.get(i);
-
-                for (LocalDate localDate : map.keySet()) {
-                    if (localDate.equals(myDate)) {
-                        break;
+                    for (LocalDate localDate : map.keySet()) {
+                        if (localDate.equals(firstDate)) {
+                            break;
+                        }
+                        dateIndex++;
                     }
-                    dateIndex++;
-                }
 
-                for (int j = 0; j < daysInBetween; j++) {
-                    trendList.set(dateIndex + j, minValueList.get(i).add(BigDecimal.valueOf(j).multiply(step)));
+                    for (int j = 0; j < daysInBetween; j++) {
+                        trendList.set(dateIndex + j, initialMinValue.add(BigDecimal.valueOf(j).multiply(step)));
+                    }
+
+                } else if (trendLine.regressionList.get(i) == 1) {
+
+                    LocalDate firstDate = maxDateList.get(i);
+                    BigDecimal step = new BigDecimal(0);
+                    int daysInBetween = 0;
+                    BigDecimal initialMaxValue = maxValueList.get(i);
+
+                    for (int j = i + 1; j < regressionList.size() - 1; j++) {
+
+                        if (regressionList.get(j) == 1) {
+                            daysInBetween = (int) Math.abs(DAYS.between(maxDateList.get(j), firstDate));
+                            step = (maxValueList.get(j).subtract(initialMaxValue)
+                                    .divide(BigDecimal.valueOf(daysInBetween), 6));
+                            i++;
+                        } else {
+                            if (regressionList.get(j + 1) == 1) {
+                            } else {
+                                break;
+                            }
+                        }
+                    }
+
+                    for (LocalDate localDate : map.keySet()) {
+                        if (localDate.equals(firstDate)) {
+                            break;
+                        }
+                        dateIndex++;
+                    }
+
+                    for (int j = 0; j < daysInBetween; j++) {
+                        trendList.set(dateIndex + j, initialMaxValue.add(BigDecimal.valueOf(j).multiply(step)));
+                    }
                 }
             }
+            return trendList;
         }
-        return trendList;
+        return null;
     }
 }
