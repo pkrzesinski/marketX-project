@@ -40,8 +40,7 @@ public class CurrencyService {
     }
 
     public FXDaily getHistoricalData(String fromCurrency, String toCurrency) {
-        FXDaily fxDaily = alphavantageAPI.getHistoricalData(fromCurrency, toCurrency);
-        return fxDaily;
+        return alphavantageAPI.getHistoricalData(fromCurrency, toCurrency);
     }
 
     private Map<String, String> getMapOfCurrencies() {

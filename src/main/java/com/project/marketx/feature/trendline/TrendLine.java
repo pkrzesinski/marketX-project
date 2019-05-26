@@ -1,7 +1,6 @@
 package com.project.marketx.feature.trendline;
 
 import com.project.marketx.feature.api.model.forexdailyprices.DailyRate;
-import com.project.marketx.feature.currencies.service.CurrencyService;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,8 +20,6 @@ public class TrendLine {
     private Map<LocalDate, BigDecimal> minMap = new LinkedHashMap<>();
     private List<Integer> regressionList = new ArrayList<>();
 
-    @Autowired
-    private CurrencyService currencyService;
     @Autowired
     private TrendLine trendLine;
 
@@ -55,7 +52,6 @@ public class TrendLine {
 
     public List<BigDecimal> createTrendLine(String fromCurrency, String toCurrency, Map<LocalDate, DailyRate> map) {
 
-//        TrendLine trendLine = new TrendLine();
         List<BigDecimal> closePriceList = map.values()
                 .stream()
                 .map(DailyRate::getClose)
@@ -179,10 +175,7 @@ public class TrendLine {
                                     .divide(BigDecimal.valueOf(daysInBetween), 6));
                             i++;
                         } else {
-                            if (regressionList.get(j + 1) == 1) {
-                            } else {
-                                break;
-                            }
+                            break;
                         }
                     }
 
