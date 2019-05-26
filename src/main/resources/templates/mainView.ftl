@@ -167,7 +167,7 @@
                 var option = {
                     backgroundColor: '#21202D',
                     legend: {
-                        data: ['Candle stick', 'Close price', 'test'],
+                        data: ['Candle stick', 'Close price', 'Trend line'],
                         inactiveColor: '#777',
                         textStyle: {
                             color: '#fff'
@@ -253,7 +253,7 @@
                             }
                         },
                         {
-                            name: 'test',
+                            name: 'Trend line',
                             type: 'line',
                             data: [<#if trendModel??><#list trendModel as values>${values}<#sep>,</#list></#if>],
                             smooth: false,

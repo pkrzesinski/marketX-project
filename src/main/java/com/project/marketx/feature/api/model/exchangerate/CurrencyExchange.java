@@ -12,6 +12,10 @@ public class CurrencyExchange {
     public CurrencyExchange() {
     }
 
+    public CurrencyExchange(RealTimeCurrencyExchange realtimeCurrencyExchangeRate) {
+        this.realtimeCurrencyExchangeRate = realtimeCurrencyExchangeRate;
+    }
+
     public RealTimeCurrencyExchange getRealtimeCurrencyExchangeRate() {
         return realtimeCurrencyExchangeRate;
     }

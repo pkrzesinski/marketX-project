@@ -29,11 +29,6 @@ public class CurrencyController {
     private CurrencyService currencyService;
     @Autowired
     private TrendLine trendLine;
-//
-//    @Autowired
-//    public CurrencyController(CurrencyService currencyService) {
-//        this.currencyService = currencyService;
-//    }
 
     @GetMapping
     public String displayMainPage(ServletRequest request, Model model) {
@@ -42,7 +37,6 @@ public class CurrencyController {
         String toCurrency = request.getParameter("toCurrency");
 
         if (fromCurrency != null && toCurrency != null) {
-
             Optional<CurrencyExchange> currencyExchange = currencyService.getCurrencyRate(fromCurrency, toCurrency);
 
             Map<LocalDate, DailyRate> historicalMap = currencyService.getHistoricalData(fromCurrency, toCurrency)
