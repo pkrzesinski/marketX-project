@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ConverterTest {
 
     @Test
-    public void shouldCheckIfMapSizeIsCorrect() {
+    public void shouldTestIfMapSizeIsCorrect() {
         //given
         ObjectMapper sut = new ObjectMapper();
 
@@ -36,7 +36,7 @@ public class ConverterTest {
     }
 
     @Test
-    public void shouldCheckIfMapHasProperKeys() {
+    public void shouldTestIfMapHasProperKeys() {
         //given
         ObjectMapper sut = new ObjectMapper();
 
