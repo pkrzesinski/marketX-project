@@ -29,11 +29,6 @@ public class CurrencyController {
     private CurrencyService currencyService;
     @Autowired
     private TrendLine trendLine;
-//
-//    @Autowired
-//    public CurrencyController(CurrencyService currencyService) {
-//        this.currencyService = currencyService;
-//    }
 
     @GetMapping
     public String displayMainPage(ServletRequest request, Model model) {

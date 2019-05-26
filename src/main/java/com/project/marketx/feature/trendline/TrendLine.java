@@ -23,6 +23,11 @@ public class TrendLine {
 
     @Autowired
     private CurrencyService currencyService;
+    @Autowired
+    private TrendLine trendLine;
+
+    public TrendLine() {
+    }
 
     public Map<LocalDate, BigDecimal> getMaxMap() {
         return maxMap;
@@ -50,13 +55,11 @@ public class TrendLine {
 
     public List<BigDecimal> createTrendLine(String fromCurrency, String toCurrency, Map<LocalDate, DailyRate> map) {
 
-        TrendLine trendLine = new TrendLine();
-
+//        TrendLine trendLine = new TrendLine();
         List<BigDecimal> closePriceList = map.values()
                 .stream()
                 .map(DailyRate::getClose)
                 .collect(Collectors.toList());
-
         List<LocalDate> closePriceDate = new ArrayList<>(map.keySet());
 
         LocalDate maxDate = null;

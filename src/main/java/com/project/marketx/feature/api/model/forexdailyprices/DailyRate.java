@@ -20,6 +20,13 @@ public class DailyRate {
     public DailyRate() {
     }
 
+    public DailyRate(BigDecimal open, BigDecimal high, BigDecimal low, BigDecimal close) {
+        this.open = open;
+        this.high = high;
+        this.low = low;
+        this.close = close;
+    }
+
     public BigDecimal getOpen() {
         return open;
     }

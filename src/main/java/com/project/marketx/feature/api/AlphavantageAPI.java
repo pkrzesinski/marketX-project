@@ -18,6 +18,8 @@ public class AlphavantageAPI {
 
     private String url = "https://www.alphavantage.co/query";
 
+    private RestTemplate restTemplate = new RestTemplate();
+
     public CurrencyExchange findExchangeRate(String fromCurrency, String toCurrency) {
 
         UriComponents uriComponents = UriComponentsBuilder
@@ -27,8 +29,6 @@ public class AlphavantageAPI {
                 .queryParam("from_currency", fromCurrency)
                 .queryParam("to_currency", toCurrency)
                 .build();
-
-        RestTemplate restTemplate = new RestTemplate();
 
         return restTemplate.getForObject(uriComponents.toUri(), CurrencyExchange.class);
     }
@@ -43,8 +43,6 @@ public class AlphavantageAPI {
                 .queryParam("apikey", API_KEY)
                 .queryParam("outputsize", "full")
                 .build();
-
-        RestTemplate restTemplate = new RestTemplate();
 
         return restTemplate.getForObject(uriComponents.toUri(), FXDaily.class);
     }

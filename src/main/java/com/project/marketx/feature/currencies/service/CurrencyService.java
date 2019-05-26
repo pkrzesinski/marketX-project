@@ -44,7 +44,6 @@ public class CurrencyService {
         return fxDaily;
     }
 
-
     private Map<String, String> getMapOfCurrencies() {
         return converter.getCurrenciesMap();
     }
