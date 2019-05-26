@@ -98,7 +98,7 @@
 
 <div class="container text-center">
     <h1> <#if fromCurrencyModel??> ${fromCurrencyModel} - ${toCurrencyModel} </#if></h1>
-    <h2 style="color:red;"><#if historicalModel??><#if historicalModel?size==0>No data for selected currencies.</#if></#if></h2>
+    <h3 style="color:red;"><#if limitModel??>${limitModel}</#if></h3>
 </div>
 
 <div class="container">

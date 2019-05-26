@@ -30,6 +30,7 @@ public class AlphavantageAPI {
                 .queryParam("to_currency", toCurrency)
                 .build();
 
+        LOG.info("API: exchange rate requested");
         return restTemplate.getForObject(uriComponents.toUri(), CurrencyExchange.class);
     }
 
@@ -44,6 +45,7 @@ public class AlphavantageAPI {
                 .queryParam("outputsize", "full")
                 .build();
 
+        LOG.info("API: historical rate data requested");
         return restTemplate.getForObject(uriComponents.toUri(), FXDaily.class);
     }
 }

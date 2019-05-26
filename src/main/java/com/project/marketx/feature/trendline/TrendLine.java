@@ -1,7 +1,10 @@
 package com.project.marketx.feature.trendline;
 
 import com.project.marketx.feature.api.model.forexdailyprices.DailyRate;
+import com.project.marketx.feature.currencies.controller.CurrencyController;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +17,7 @@ import static java.time.temporal.ChronoUnit.DAYS;
 
 @Component
 public class TrendLine {
+    private static final Logger LOG = LoggerFactory.getLogger(TrendLine.class);
     private static final int TIME_PERIOD_STEP_IN_DAYS = 45;
 
     private Map<LocalDate, BigDecimal> maxMap = new LinkedHashMap<>();
@@ -56,6 +60,7 @@ public class TrendLine {
                 .stream()
                 .map(DailyRate::getClose)
                 .collect(Collectors.toList());
+        LOG.info("Close price list of size: " + closePriceList.size() + "loaded");
         List<LocalDate> closePriceDate = new ArrayList<>(map.keySet());
 
         LocalDate maxDate = null;
@@ -191,6 +196,7 @@ public class TrendLine {
                     }
                 }
             }
+            LOG.info("Trend list of size: " + trendList.size() + "returned" );
             return trendList;
         }
         return null;
