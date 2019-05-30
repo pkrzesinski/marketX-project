@@ -12,7 +12,3 @@ Java 8, Spring Boot, Maven, FreeMarker, Bootstrap, Junit, Mocikto, Echarts
 
 ___________________________________________________________________________________________
 Please bear in mind the API key is free, what allows only for 5 request per minute and 500 per day. It may cause the data is not loaded (the proper information will show up).
-
-The application is done by Paweł Krzesiński. It is a part of recruitment process for Kainos Exchange Programme 2019. 
-
-
