@@ -20,10 +20,6 @@ public class FXDaily {
         return timeSeriesFX;
     }
 
-    public void setTimeSeriesFX(Map<LocalDate, DailyRate> timeSeriesFX) {
-        this.timeSeriesFX = timeSeriesFX;
-    }
-
     @Override
     public String toString() {
         return "FXDaily{" +
