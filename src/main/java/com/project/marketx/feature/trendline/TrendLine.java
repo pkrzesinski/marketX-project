@@ -1,67 +1,52 @@
 package com.project.marketx.feature.trendline;
 
 import com.project.marketx.feature.api.model.forexdailyprices.DailyRate;
-import com.project.marketx.feature.currencies.controller.CurrencyController;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 
 @Component
 public class TrendLine {
-    private static final Logger LOG = LoggerFactory.getLogger(TrendLine.class);
     private static final int TIME_PERIOD_STEP_IN_DAYS = 45;
 
     private Map<LocalDate, BigDecimal> maxMap = new LinkedHashMap<>();
     private Map<LocalDate, BigDecimal> minMap = new LinkedHashMap<>();
     private List<Integer> regressionList = new ArrayList<>();
 
-    @Autowired
     private TrendLine trendLine;
 
-    public TrendLine() {
+    @Autowired
+    public TrendLine(TrendLine trendLine) {
+        this.trendLine = trendLine;
     }
 
-    public Map<LocalDate, BigDecimal> getMaxMap() {
-        return maxMap;
-    }
-
-    public void setMaxMap(Map<LocalDate, BigDecimal> maxMap) {
+    private void setMaxMap(Map<LocalDate, BigDecimal> maxMap) {
         this.maxMap = maxMap;
     }
 
-    public Map<LocalDate, BigDecimal> getMinMap() {
-        return minMap;
-    }
-
-    public void setMinMap(Map<LocalDate, BigDecimal> minMap) {
+    private void setMinMap(Map<LocalDate, BigDecimal> minMap) {
         this.minMap = minMap;
     }
 
-    public List<Integer> getRegressionList() {
-        return regressionList;
-    }
-
-    public void setRegressionList(List<Integer> regressionList) {
+    private void setRegressionList(List<Integer> regressionList) {
         this.regressionList = regressionList;
     }
 
-    public List<BigDecimal> createTrendLine(String fromCurrency, String toCurrency, Map<LocalDate, DailyRate> map) {
+    public List<BigDecimal> createTrendLine(Map<LocalDate, DailyRate> historicalExchangeRateMap) {
 
-        List<BigDecimal> closePriceList = map.values()
-                .stream()
-                .map(DailyRate::getClose)
-                .collect(Collectors.toList());
-        LOG.info("Close price list of size: " + closePriceList.size() + "loaded");
-        List<LocalDate> closePriceDate = new ArrayList<>(map.keySet());
+        List<BigDecimal> closePriceList = getClosePriceListForHistoricalData(historicalExchangeRateMap);
+
+        List<LocalDate> closePriceDate = new ArrayList<>(historicalExchangeRateMap.keySet());
 
         LocalDate maxDate = null;
         LocalDate minDate = null;
@@ -70,7 +55,7 @@ public class TrendLine {
 
         int numberOfTimePeriods = closePriceList.size() / TIME_PERIOD_STEP_IN_DAYS;
 
-        if (map.size() > 0) {
+        if (historicalExchangeRateMap.size() > 0) {
             minMap.clear();
             maxMap.clear();
             regressionList.clear();
@@ -114,7 +99,14 @@ public class TrendLine {
         trendLine.setMinMap(minMap);
         trendLine.setRegressionList(regressionList);
 
-        return drawTrend(trendLine, map);
+        return drawTrend(trendLine, historicalExchangeRateMap);
+    }
+
+    private List<BigDecimal> getClosePriceListForHistoricalData(Map<LocalDate, DailyRate> historicalExchangeRateMap) {
+        return historicalExchangeRateMap.values()
+                .stream()
+                .map(DailyRate::getClose)
+                .collect(Collectors.toList());
     }
 
     private List<BigDecimal> drawTrend(TrendLine trendLine, Map<LocalDate, DailyRate> map) {
@@ -127,8 +119,6 @@ public class TrendLine {
                 .stream()
                 .map(DailyRate::getClose)
                 .collect(Collectors.toList());
-
-        Set<LocalDate> setDates = map.keySet();
 
         if (map.size() > 0) {
             for (int i = 0; i < trendLine.regressionList.size(); i++) {
@@ -154,12 +144,7 @@ public class TrendLine {
                         }
                     }
 
-                    for (LocalDate localDate : map.keySet()) {
-                        if (localDate.equals(firstDate)) {
-                            break;
-                        }
-                        dateIndex++;
-                    }
+                    dateIndex = getDateIndex(map, dateIndex, firstDate);
 
                     for (int j = 0; j < daysInBetween; j++) {
                         trendList.set(dateIndex + j, initialMinValue.add(BigDecimal.valueOf(j).multiply(step)));
@@ -184,21 +169,25 @@ public class TrendLine {
                         }
                     }
 
-                    for (LocalDate localDate : map.keySet()) {
-                        if (localDate.equals(firstDate)) {
-                            break;
-                        }
-                        dateIndex++;
-                    }
+                    dateIndex = getDateIndex(map, dateIndex, firstDate);
 
                     for (int j = 0; j < daysInBetween; j++) {
                         trendList.set(dateIndex + j, initialMaxValue.add(BigDecimal.valueOf(j).multiply(step)));
                     }
                 }
             }
-            LOG.info("Trend list of size: " + trendList.size() + "returned" );
             return trendList;
         }
         return null;
+    }
+
+    private int getDateIndex(Map<LocalDate, DailyRate> map, int dateIndex, LocalDate firstDate) {
+        for (LocalDate localDate : map.keySet()) {
+            if (localDate.isEqual(firstDate)) {
+                break;
+            }
+            dateIndex++;
+        }
+        return dateIndex;
     }
 }

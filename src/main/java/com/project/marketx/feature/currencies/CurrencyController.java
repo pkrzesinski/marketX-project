@@ -55,8 +55,7 @@ class CurrencyController {
                 });
                 model.addAttribute("historicalModel", changeKeyOrder(historicalMap.get()));
 
-                List<BigDecimal> plotPoints = trendLine.createTrendLine(fromCurrency, toCurrency,
-                        changeKeyOrder(historicalMap.get()));
+                List<BigDecimal> plotPoints = trendLine.createTrendLine(changeKeyOrder(historicalMap.get()));
                 model.addAttribute("trendModel", plotPoints);
             } else {
                 model.addAttribute("limitModel", "No data for selected currencies or " +
