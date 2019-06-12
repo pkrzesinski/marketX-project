@@ -2,11 +2,8 @@ package com.project.marketx.feature.currencies.model;
 
 public class Currency {
 
-    private String code;
-    private String currency;
-
-    public Currency() {
-    }
+    private final String code;
+    private final String currency;
 
     public Currency(String code, String currency) {
         this.code = code;
