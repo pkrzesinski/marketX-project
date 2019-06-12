@@ -17,16 +17,8 @@ public class Currency {
         return code;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     public String getCurrency() {
         return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
     }
 
     @Override
