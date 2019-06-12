@@ -42,27 +42,25 @@ public class CurrencyController {
         String toCurrency = request.getParameter("toCurrency");
 
         if (fromCurrency != null && toCurrency != null) {
-            LOG.info("Currency exchange from " + fromCurrency + " to " + toCurrency + " requested");
-            Optional<CurrencyExchange> currencyExchange = currencyService.getCurrencyRate(fromCurrency, toCurrency);
+            LOG.info("Currency exchange from {} to {} displayed", fromCurrency, toCurrency);
 
-            Map<LocalDate, DailyRate> historicalMap = currencyService.getHistoricalData(fromCurrency, toCurrency)
-                    .getTimeSeriesFX();
-            LOG.info("Map of size: " + historicalMap.size() + " loaded");
+            Optional<CurrencyExchange> currencyExchange = currencyService.getCurrencyRate(fromCurrency, toCurrency);
+            Optional<Map<LocalDate, DailyRate>> historicalMap = currencyService.getHistoricalMap(fromCurrency, toCurrency);
 
             model.addAttribute("fromCurrencyModel", fromCurrency);
             model.addAttribute("toCurrencyModel", toCurrency);
 
-            if (historicalMap.size() > 0) {
+            if (historicalMap.isPresent()) {
+                currencyExchange.ifPresent(exchange -> {
+                    model.addAttribute("rateModel", exchange.getRealtimeCurrencyExchangeRate()
+                            .getExchangeRate());
+                });
+                model.addAttribute("historicalModel", changeKeyOrder(historicalMap.get()));
 
-                currencyExchange.ifPresent(exchange -> model.addAttribute("rateModel"
-                        , exchange.getRealtimeCurrencyExchangeRate().getExchangeRate()));
-                model.addAttribute("historicalModel", changeKeyOrder(historicalMap));
                 List<BigDecimal> plotPoints = trendLine.createTrendLine(fromCurrency, toCurrency,
-                        changeKeyOrder(historicalMap));
+                        changeKeyOrder(historicalMap.get()));
                 model.addAttribute("trendModel", plotPoints);
-
             } else {
-
                 model.addAttribute("limitModel", "No data for selected currencies or " +
                         "limit of free requests has been exceeded." +
                         " Please try again in one minute.");

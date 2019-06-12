@@ -99,7 +99,7 @@ public class CurrencyServiceTest {
                 .thenReturn(mockedFXDailyObject());
 
         //when
-        FXDaily result = mockedSut.getHistoricalData(Mockito.anyString(), Mockito.anyString());
+        FXDaily result = mockedSut.getHistoricalData(Mockito.anyString(), Mockito.anyString()).get();
 
         //then
         verify(alphavantageAPI, times(1)).getHistoricalData(Mockito.anyString(), Mockito.anyString());
