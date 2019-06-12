@@ -25,10 +25,14 @@ import java.util.stream.Collectors;
 public class CurrencyController {
     private static final Logger LOG = LoggerFactory.getLogger(CurrencyController.class);
 
-    @Autowired
     private CurrencyService currencyService;
-    @Autowired
     private TrendLine trendLine;
+
+    @Autowired
+    public CurrencyController(CurrencyService currencyService, TrendLine trendLine) {
+        this.currencyService = currencyService;
+        this.trendLine = trendLine;
+    }
 
     @GetMapping
     public String displayMainPage(ServletRequest request, Model model) {
@@ -40,8 +44,6 @@ public class CurrencyController {
         if (fromCurrency != null && toCurrency != null) {
             LOG.info("Currency exchange from " + fromCurrency + " to " + toCurrency + " requested");
             Optional<CurrencyExchange> currencyExchange = currencyService.getCurrencyRate(fromCurrency, toCurrency);
-
-
 
             Map<LocalDate, DailyRate> historicalMap = currencyService.getHistoricalData(fromCurrency, toCurrency)
                     .getTimeSeriesFX();
