@@ -4,14 +4,14 @@ import com.project.marketx.feature.api.model.exchangerate.CurrencyExchange;
 import com.project.marketx.feature.api.model.forexdailyprices.FXDaily;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -57,14 +57,12 @@ public class AlphavantageAPITest {
         String url = "https://www.alphavantage.co/query";
         UriComponents uriComponents = UriComponentsBuilder
                 .fromUriString(url)
+                .queryParam("apikey", API_KEY)
                 .queryParam("function", FUNCTION_HISTORICAL)
                 .queryParam("from_symbol", fromCurrency)
                 .queryParam("to_symbol", toCurrency)
-                .queryParam("apikey", API_KEY)
                 .queryParam("outputsize", "full")
                 .build();
-
-
         when(restTemplate.getForObject(uriComponents.toUri(), FXDaily.class)).thenReturn(new FXDaily());
 
         //when
@@ -73,5 +71,4 @@ public class AlphavantageAPITest {
         //then
         assertThat(result).isExactlyInstanceOf(FXDaily.class);
     }
-
 }
