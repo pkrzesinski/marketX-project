@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 @Component
-public class TrendLine {
+public class TrendLineService {
     private static final int TIME_PERIOD_STEP_IN_DAYS = 45;
 
     private Map<LocalDate, BigDecimal> maxMap = new LinkedHashMap<>();
@@ -24,9 +24,9 @@ public class TrendLine {
     private List<Integer> regressionList = new ArrayList<>();
 
     @Autowired
-    private TrendLine trendLine;
+    private TrendLineService trendLine;
 
-    public TrendLine() {
+    public TrendLineService() {
     }
 
     private void setMaxMap(Map<LocalDate, BigDecimal> maxMap) {
@@ -64,8 +64,8 @@ public class TrendLine {
                 int timePeriod = 0;
                 simpleRegression.clear();
 
-                BigDecimal max = BigDecimal.valueOf(Integer.MIN_VALUE);
-                BigDecimal min = BigDecimal.valueOf(Integer.MAX_VALUE);
+                BigDecimal max = BigDecimal.valueOf(Long.MIN_VALUE);
+                BigDecimal min = BigDecimal.valueOf(Long.MAX_VALUE);
 
                 for (int j = timePeriod; j < TIME_PERIOD_STEP_IN_DAYS; j++) {
 
@@ -86,7 +86,7 @@ public class TrendLine {
                 maxMap.put(maxDate, max);
                 minMap.put(minDate, min);
 
-                if (simpleRegression.getSlope() > 0) {
+                if (slope > 0) {
                     regressionList.add(1);
                 } else {
                     regressionList.add(-1);
@@ -108,7 +108,7 @@ public class TrendLine {
                 .collect(Collectors.toList());
     }
 
-    private List<BigDecimal> drawTrend(TrendLine trendLine, Map<LocalDate, DailyRate> map) {
+    private List<BigDecimal> drawTrend(TrendLineService trendLine, Map<LocalDate, DailyRate> map) {
         List<BigDecimal> maxValueList = new ArrayList<>(maxMap.values());
         List<LocalDate> maxDateList = new ArrayList<>(maxMap.keySet());
         List<BigDecimal> minValueList = new ArrayList<>(minMap.values());

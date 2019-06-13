@@ -2,7 +2,7 @@ package com.project.marketx.feature.currencies;
 
 import com.project.marketx.feature.api.model.exchangerate.CurrencyExchange;
 import com.project.marketx.feature.api.model.forexdailyprices.DailyRate;
-import com.project.marketx.feature.trendline.TrendLine;
+import com.project.marketx.feature.trendline.TrendLineService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +24,10 @@ class CurrencyController {
     private static final Logger LOG = LoggerFactory.getLogger(CurrencyController.class);
 
     private CurrencyService currencyService;
-    private TrendLine trendLine;
+    private TrendLineService trendLine;
 
     @Autowired
-    public CurrencyController(CurrencyService currencyService, TrendLine trendLine) {
+    public CurrencyController(CurrencyService currencyService, TrendLineService trendLine) {
         this.currencyService = currencyService;
         this.trendLine = trendLine;
     }

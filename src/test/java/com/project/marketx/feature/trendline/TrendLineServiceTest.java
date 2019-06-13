@@ -18,10 +18,10 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TrendLineTest {
+public class TrendLineServiceTest {
 
     @Autowired
-    private TrendLine sut;
+    private TrendLineService sut;
 
     @Test
     public void shouldTestIfReturnedListSizeIsCorrect() {
