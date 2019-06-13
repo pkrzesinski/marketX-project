@@ -20,7 +20,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
-class CurrencyController {
+public class CurrencyController {
     private static final Logger LOG = LoggerFactory.getLogger(CurrencyController.class);
 
     private CurrencyService currencyService;
@@ -48,7 +48,7 @@ class CurrencyController {
             model.addAttribute("fromCurrencyModel", fromCurrency);
             model.addAttribute("toCurrencyModel", toCurrency);
 
-            if (historicalMap.isPresent()) {
+            if (historicalMap.isPresent() && historicalMap.get().size() > 0) {
                 currencyExchange.ifPresent(exchange -> {
                     model.addAttribute("rateModel", exchange.getRealtimeCurrencyExchangeRate()
                             .getExchangeRate());

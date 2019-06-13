@@ -26,40 +26,20 @@ public class RealTimeCurrencyExchange {
         return fromCurrencyCode;
     }
 
-    public void setFromCurrencyCode(String fromCurrencyCode) {
-        this.fromCurrencyCode = fromCurrencyCode;
-    }
-
     public String getToCurrencyCode() {
         return toCurrencyCode;
-    }
-
-    public void setToCurrencyCode(String toCurrencyCode) {
-        this.toCurrencyCode = toCurrencyCode;
     }
 
     public BigDecimal getExchangeRate() {
         return exchangeRate;
     }
 
-    public void setExchangeRate(BigDecimal exchangeRate) {
-        this.exchangeRate = exchangeRate;
-    }
-
     public String getLastRefreshed() {
         return lastRefreshed;
     }
 
-    public void setLastRefreshed(String lastRefreshed) {
-        this.lastRefreshed = lastRefreshed;
-    }
-
     public String getTimeZone() {
         return timeZone;
-    }
-
-    public void setTimeZone(String timeZone) {
-        this.timeZone = timeZone;
     }
 
     @Override

@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Startup
-class CurrencyService {
+public class CurrencyService {
     private static final Logger LOG = LoggerFactory.getLogger(CurrencyService.class);
 
     private Converter converter;
@@ -43,19 +43,19 @@ class CurrencyService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<CurrencyExchange> getCurrencyRate(String fromCurrency, String toCurrency) {
+    Optional<CurrencyExchange> getCurrencyRate(String fromCurrency, String toCurrency) {
         LOG.info("Currencies rate requested. Form currency {} to {}", fromCurrency, toCurrency);
         CurrencyExchange currencyExchange = alphavantageAPI.findExchangeRate(fromCurrency, toCurrency);
         return Optional.ofNullable(currencyExchange);
     }
 
-    public Optional<FXDaily> getHistoricalData(String fromCurrency, String toCurrency) {
+    Optional<FXDaily> getHistoricalData(String fromCurrency, String toCurrency) {
         LOG.info("Historical currency rate data requested, from currency {} to {}", fromCurrency, toCurrency);
         FXDaily fxDaily = alphavantageAPI.getHistoricalData(fromCurrency, toCurrency);
         return Optional.ofNullable(fxDaily);
     }
 
-    public Optional<Map<LocalDate, DailyRate>> getHistoricalMap(String fromCurrency, String toCurrency) {
+    Optional<Map<LocalDate, DailyRate>> getHistoricalMap(String fromCurrency, String toCurrency) {
         LOG.info("Historical currency rate map requested, from currency {} to {}", fromCurrency, toCurrency);
         if (getHistoricalData(fromCurrency, toCurrency).isPresent()) {
             return Optional.ofNullable(getHistoricalData(fromCurrency, toCurrency).get().getTimeSeriesFX());

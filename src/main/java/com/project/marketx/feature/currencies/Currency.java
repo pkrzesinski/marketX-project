@@ -1,6 +1,6 @@
 package com.project.marketx.feature.currencies;
 
-class Currency {
+public class Currency {
 
     private final String code;
     private final String currency;

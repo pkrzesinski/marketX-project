@@ -23,11 +23,10 @@ public class TrendLine {
     private Map<LocalDate, BigDecimal> minMap = new LinkedHashMap<>();
     private List<Integer> regressionList = new ArrayList<>();
 
+    @Autowired
     private TrendLine trendLine;
 
-    @Autowired
-    public TrendLine(TrendLine trendLine) {
-        this.trendLine = trendLine;
+    public TrendLine() {
     }
 
     private void setMaxMap(Map<LocalDate, BigDecimal> maxMap) {
