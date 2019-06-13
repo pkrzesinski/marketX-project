@@ -1,10 +1,8 @@
-package com.project.marketx.feature.currencies.controller;
+package com.project.marketx.feature.currencies;
 
 import com.project.marketx.feature.api.model.exchangerate.CurrencyExchange;
 import com.project.marketx.feature.api.model.forexdailyprices.DailyRate;
-import com.project.marketx.feature.currencies.model.Currency;
-import com.project.marketx.feature.currencies.service.CurrencyService;
-import com.project.marketx.feature.trendline.TrendLine;
+import com.project.marketx.feature.trendline.TrendLineService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +23,14 @@ import java.util.stream.Collectors;
 public class CurrencyController {
     private static final Logger LOG = LoggerFactory.getLogger(CurrencyController.class);
 
-    @Autowired
     private CurrencyService currencyService;
+    private TrendLineService trendLine;
+
     @Autowired
-    private TrendLine trendLine;
+    public CurrencyController(CurrencyService currencyService, TrendLineService trendLine) {
+        this.currencyService = currencyService;
+        this.trendLine = trendLine;
+    }
 
     @GetMapping
     public String displayMainPage(ServletRequest request, Model model) {
@@ -38,29 +40,24 @@ public class CurrencyController {
         String toCurrency = request.getParameter("toCurrency");
 
         if (fromCurrency != null && toCurrency != null) {
-            LOG.info("Currency exchange from " + fromCurrency + " to " + toCurrency + " requested");
+            LOG.info("Currency exchange from {} to {} displayed", fromCurrency, toCurrency);
+
             Optional<CurrencyExchange> currencyExchange = currencyService.getCurrencyRate(fromCurrency, toCurrency);
-
-
-
-            Map<LocalDate, DailyRate> historicalMap = currencyService.getHistoricalData(fromCurrency, toCurrency)
-                    .getTimeSeriesFX();
-            LOG.info("Map of size: " + historicalMap.size() + " loaded");
+            Optional<Map<LocalDate, DailyRate>> historicalMap = currencyService.getHistoricalMap(fromCurrency, toCurrency);
 
             model.addAttribute("fromCurrencyModel", fromCurrency);
             model.addAttribute("toCurrencyModel", toCurrency);
 
-            if (historicalMap.size() > 0) {
+            if (historicalMap.isPresent() && historicalMap.get().size() > 0) {
+                currencyExchange.ifPresent(exchange -> {
+                    model.addAttribute("rateModel", exchange.getRealtimeCurrencyExchangeRate()
+                            .getExchangeRate());
+                });
+                model.addAttribute("historicalModel", changeKeyOrder(historicalMap.get()));
 
-                currencyExchange.ifPresent(exchange -> model.addAttribute("rateModel"
-                        , exchange.getRealtimeCurrencyExchangeRate().getExchangeRate()));
-                model.addAttribute("historicalModel", changeKeyOrder(historicalMap));
-                List<BigDecimal> plotPoints = trendLine.createTrendLine(fromCurrency, toCurrency,
-                        changeKeyOrder(historicalMap));
+                List<BigDecimal> plotPoints = trendLine.createTrendLine(changeKeyOrder(historicalMap.get()));
                 model.addAttribute("trendModel", plotPoints);
-
             } else {
-
                 model.addAttribute("limitModel", "No data for selected currencies or " +
                         "limit of free requests has been exceeded." +
                         " Please try again in one minute.");

@@ -12,40 +12,39 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Component
 public class AlphavantageAPI {
     private static final Logger LOG = LoggerFactory.getLogger(AlphavantageAPI.class);
-    private final String API_KEY = "QKNXBJPRKN1DO9GN";
-    private final String FUNCTION_RATE = "CURRENCY_EXCHANGE_RATE";
-    private final String FUNCTION_HISTORICAL = "FX_DAILY";
-
-    private String url = "https://www.alphavantage.co/query";
+    private static final String API_KEY = "QKNXBJPRKN1DO9GN";
+    private static final String URL = "https://www.alphavantage.co/query";
+    private static final String FUNCTION_RATE = "CURRENCY_EXCHANGE_RATE";
+    private static final String FUNCTION_HISTORICAL = "FX_DAILY";
 
     private RestTemplate restTemplate = new RestTemplate();
 
     public CurrencyExchange findExchangeRate(String fromCurrency, String toCurrency) {
 
         UriComponents uriComponents = UriComponentsBuilder
-                .fromUriString(url)
+                .fromUriString(URL)
                 .queryParam("apikey", API_KEY)
                 .queryParam("function", FUNCTION_RATE)
                 .queryParam("from_currency", fromCurrency)
                 .queryParam("to_currency", toCurrency)
                 .build();
 
-        LOG.info("API: exchange rate requested");
+        LOG.info("API: exchange rate requested, from currency {} to {}.", fromCurrency, toCurrency);
         return restTemplate.getForObject(uriComponents.toUri(), CurrencyExchange.class);
     }
 
     public FXDaily getHistoricalData(String fromCurrency, String toCurrency) {
 
         UriComponents uriComponents = UriComponentsBuilder
-                .fromUriString(url)
+                .fromUriString(URL)
+                .queryParam("apikey", API_KEY)
                 .queryParam("function", FUNCTION_HISTORICAL)
                 .queryParam("from_symbol", fromCurrency)
                 .queryParam("to_symbol", toCurrency)
-                .queryParam("apikey", API_KEY)
                 .queryParam("outputsize", "full")
                 .build();
 
-        LOG.info("API: historical rate data requested");
+        LOG.info("API: historical rate data requested, from currency {} to {}.", fromCurrency, toCurrency);
         return restTemplate.getForObject(uriComponents.toUri(), FXDaily.class);
     }
 }

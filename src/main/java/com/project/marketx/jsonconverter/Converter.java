@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
+import java.util.Objects;
 
 @Component
 public class Converter {
@@ -18,14 +19,13 @@ public class Converter {
     public Map<String, String> getCurrenciesMap() {
 
         ObjectMapper mapper = new ObjectMapper();
-        Map<String, String> result;
 
-        try {
-            InputStream inputStream = getClass().getClassLoader().getResource("json/currencies.json").openStream();
-            return result = mapper.readValue(inputStream, new TypeReference<Map<String, String>>() {
+        try (InputStream inputStream = Objects.requireNonNull(getClass().getClassLoader()
+                .getResource("json/currencies.json")).openStream()) {
+            return mapper.readValue(inputStream, new TypeReference<Map<String, String>>() {
             });
         } catch (IOException e) {
-            LOG.warn("Null json exception " + e);
+            LOG.warn("Json - currencies converter IO Exception caught " + e);
         }
         return null;
     }

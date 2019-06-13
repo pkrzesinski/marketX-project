@@ -1,14 +1,11 @@
-package com.project.marketx.feature.currencies.model;
+package com.project.marketx.feature.currencies;
 
 public class Currency {
 
-    private String code;
-    private String currency;
+    private final String code;
+    private final String currency;
 
-    public Currency() {
-    }
-
-    public Currency(String code, String currency) {
+    Currency(String code, String currency) {
         this.code = code;
         this.currency = currency;
     }
@@ -17,16 +14,8 @@ public class Currency {
         return code;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     public String getCurrency() {
         return currency;
-    }
-
-    public void setCurrency(String currency) {
-        this.currency = currency;
     }
 
     @Override

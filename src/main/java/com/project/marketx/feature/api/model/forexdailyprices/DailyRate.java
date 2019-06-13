@@ -31,32 +31,16 @@ public class DailyRate {
         return open;
     }
 
-    public void setOpen(BigDecimal open) {
-        this.open = open;
-    }
-
     public BigDecimal getHigh() {
         return high;
-    }
-
-    public void setHigh(BigDecimal high) {
-        this.high = high;
     }
 
     public BigDecimal getLow() {
         return low;
     }
 
-    public void setLow(BigDecimal low) {
-        this.low = low;
-    }
-
     public BigDecimal getClose() {
         return close;
-    }
-
-    public void setClose(BigDecimal close) {
-        this.close = close;
     }
 
     @Override

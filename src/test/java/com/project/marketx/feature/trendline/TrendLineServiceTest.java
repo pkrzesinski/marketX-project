@@ -18,19 +18,17 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TrendLineTest {
+public class TrendLineServiceTest {
 
     @Autowired
-    private TrendLine sut;
+    private TrendLineService sut;
 
     @Test
     public void shouldTestIfReturnedListSizeIsCorrect() {
         //given
-        String fromCurrency = "EUR";
-        String toCurrency = "USD";
 
         //when
-        List<BigDecimal> result = sut.createTrendLine(fromCurrency, toCurrency, mockedList());
+        List<BigDecimal> result = sut.createTrendLine(mockedList());
 
         //then
         assertThat(result).hasSize(3);
@@ -39,11 +37,9 @@ public class TrendLineTest {
     @Test
     public void shouldTestIfReturnedListHasCorrectValues() {
         //given
-        String fromCurrency = "EUR";
-        String toCurrency = "USD";
 
         //when
-        List<BigDecimal> result = sut.createTrendLine(fromCurrency, toCurrency, mockedList());
+        List<BigDecimal> result = sut.createTrendLine(mockedList());
 
         //then
         assertEquals(0.9279, result.get(0).doubleValue(), 0.000001);
@@ -54,15 +50,15 @@ public class TrendLineTest {
 
     private Map<LocalDate, DailyRate> mockedList() {
         Map<LocalDate, DailyRate> createdMockedMap = new LinkedHashMap<>();
-        createdMockedMap.put(LocalDate.of(2001, 03, 12), new DailyRate(new BigDecimal(0.9318),
+        createdMockedMap.put(LocalDate.of(2001, 3, 12), new DailyRate(new BigDecimal(0.9318),
                 new BigDecimal(0.9342),
                 new BigDecimal(0.9256),
                 new BigDecimal(0.9279)));
-        createdMockedMap.put(LocalDate.of(2001, 03, 13), new DailyRate(new BigDecimal(0.9274),
+        createdMockedMap.put(LocalDate.of(2001, 3, 13), new DailyRate(new BigDecimal(0.9274),
                 new BigDecimal(0.9300),
                 new BigDecimal(0.9124),
                 new BigDecimal(0.9140)));
-        createdMockedMap.put(LocalDate.of(2001, 03, 14), new DailyRate(new BigDecimal(0.9138),
+        createdMockedMap.put(LocalDate.of(2001, 3, 14), new DailyRate(new BigDecimal(0.9138),
                 new BigDecimal(0.9209),
                 new BigDecimal(0.9076),
                 new BigDecimal(0.9096)));
