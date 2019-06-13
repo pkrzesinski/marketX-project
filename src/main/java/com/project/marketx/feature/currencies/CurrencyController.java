@@ -20,7 +20,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Controller
-class CurrencyController {
+public class CurrencyController {
     private static final Logger LOG = LoggerFactory.getLogger(CurrencyController.class);
 
     private CurrencyService currencyService;
