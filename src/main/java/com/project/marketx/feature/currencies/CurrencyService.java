@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Startup
-public class CurrencyService {
+class CurrencyService {
     private static final Logger LOG = LoggerFactory.getLogger(CurrencyService.class);
 
     private Converter converter;
